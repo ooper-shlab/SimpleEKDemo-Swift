@@ -13,7 +13,6 @@
 		7E19D41311D189F4000002E9 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 7E19D41211D189F4000002E9 /* iTunesArtwork */; };
 		7E4A142A11ADA0AA004BA0B1 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4A142911ADA0AA004BA0B1 /* EventKit.framework */; };
 		7E4A142C11ADA0B1004BA0B1 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4A142B11ADA0B1004BA0B1 /* EventKitUI.framework */; };
-		7E8EEA9B1195EFF40073914C /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7E8EEA9A1195EFF40073914C /* ReadMe.txt */; };
 		7EABE47C11D14FF80050EA1D /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EABE47711D14FF80050EA1D /* Icon-Small.png */; };
 		7EABE47D11D14FF80050EA1D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EABE47811D14FF80050EA1D /* Icon-Small@2x.png */; };
 		7EABE47E11D14FF80050EA1D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EABE47911D14FF80050EA1D /* Icon.png */; };
@@ -193,7 +192,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E8EEA9B1195EFF40073914C /* ReadMe.txt in Resources */,
 				7EABE47C11D14FF80050EA1D /* Icon-Small.png in Resources */,
 				7EABE47D11D14FF80050EA1D /* Icon-Small@2x.png in Resources */,
 				7EABE47E11D14FF80050EA1D /* Icon.png in Resources */,

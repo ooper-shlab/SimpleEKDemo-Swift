@@ -218,7 +218,7 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     
     // Display an event edit view controller when the user taps the "+" button.
     // A new event is added to Calendar when the user taps the "Done" button in the above view controller.
-    @IBAction func addEvent(AnyObject) {
+    @IBAction func addEvent(_: AnyObject) {
         // Create an instance of EKEventEditViewController
         let addController = EKEventEditViewController()
         
