@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		0414D2CE1B74317E00291BC5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SimpleEKDemo/Images.xcassets; sourceTree = "<group>"; };
 		0414D2D11B74334600291BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
-		0414D2D21B7437C300291BC5 /* _ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = _ReadMe.md; sourceTree = "<group>"; };
+		0414D2D21B7437C300291BC5 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		049024B81B7436890004D3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		04B095C61B83D2E40089F6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Storyboard.strings; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* SimpleEKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleEKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				D78CC62C1B8CF32C00522FE7 /* LICENSE.txt */,
-				0414D2D21B7437C300291BC5 /* _ReadMe.md */,
+				0414D2D21B7437C300291BC5 /* ReadMe.md */,
 				D78CC62D1B8CF32C00522FE7 /* README2.md */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
