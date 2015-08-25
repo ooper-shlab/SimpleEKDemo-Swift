@@ -1,10 +1,10 @@
 # SimpleEKDemo
 
-Translated by OOPer in cooperation with shlab.jp, on 2015/6/30.
+Translated by OOPer in cooperation with shlab.jp, on 2015/8/26.
 
 Based on
-<https://developer.apple.com/library/ios/samplecode/SimpleEKDemo/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010160>
-2013-07-23.
+<https://developer.apple.com/library/prerelease/ios/samplecode/SimpleEKDemo/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010160>
+2015-08-24.
 
 As this is a line-by-line translation from the original sample code, "redistribute the Apple Software in its entirety and without modifications" would apply. See license terms in each file .
 Some faults caused by my translation may exist. Not all features tested.
@@ -13,6 +13,8 @@ You should not contact to Apple or SHLab(jp) about any faults caused by my trans
 ===========================================================================
 BUILD REQUIREMENTS:
 
-Xcode 7 beta 3, iOS SDK 9
+Xcode 7 beta 6, iOS SDK 9
 
 ===========================================================================
+
+iOS 7
