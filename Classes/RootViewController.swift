@@ -41,11 +41,11 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
         self.eventStore = EKEventStore()
         // Initialize the events list
         // The Add button is initially disabled
-        self.addButton.enabled = false
+        self.addButton.isEnabled = false
     }
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Check whether we are authorized to access Calendar
         self.checkEventStoreAccessForCalendar()
@@ -54,10 +54,10 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     
     // This method is called when the user selects an event in the table view. It configures the destination
     // event view controller with this event.
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEventViewController" {
             // Configure the destination event view controller
-            let eventViewController = segue.destinationViewController as! EKEventViewController
+            let eventViewController = segue.destination as! EKEventViewController
             // Fetch the index path associated with the selected event
             let indexPath = self.tableView.indexPathForSelectedRow!
             // Set the view controller to display the selected event
@@ -72,13 +72,13 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     //MARK: -
     //MARK: Table View
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.eventsList.count
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("eventCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath)
         
         // Get the event at the row selected and display its title
         cell.textLabel!.text = self.eventsList[indexPath.row].title
@@ -91,36 +91,29 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     
     // Check the authorization status of our application for Calendar
     private func checkEventStoreAccessForCalendar() {
-        let status = EKEventStore.authorizationStatusForEntityType(EKEntityType.Event)
+        let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         
         switch status {
             // Update our UI if the user has granted access to their Calendar
-        case .Authorized: self.accessGrantedForCalendar()
+        case .authorized: self.accessGrantedForCalendar()
             // Prompt the user for access to Calendar if there is no definitive answer
-        case .NotDetermined: self.requestCalendarAccess()
+        case .notDetermined: self.requestCalendarAccess()
             // Display a message if the user has denied or restricted access to Calendar
-        case .Denied, .Restricted:
-            if #available(iOS 8.0, *) {
-                let alertController = UIAlertController(title: "Privacy Warning", message: "Permission was not granted for Calendar", preferredStyle: .Alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .Cancel, handler: {action in})
-                alertController.addAction(defaultAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertView(title: "Privacy Warning", message: "Permission was not granted for Calendar",
-                    delegate: nil,
-                    cancelButtonTitle: "OK")
-                alert.show()
-            }
+        case .denied, .restricted:
+            let alertController = UIAlertController(title: "Privacy Warning", message: "Permission was not granted for Calendar", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: {action in})
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
     
     // Prompt the user for access to their Calendar
     private func requestCalendarAccess() {
-        self.eventStore.requestAccessToEntityType(.Event) {[weak self] granted, error in
+        self.eventStore.requestAccess(to: .event) {[weak self] granted, error in
             if granted {
                 // Let's ensure that our code will be executed from the main queue
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     // The user has granted access to their Calendar; let's populate our UI with all events occuring in the next 24 hours.
                     self?.accessGrantedForCalendar()
                 }
@@ -134,7 +127,7 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
         // Let's get the default calendar associated with our event store
         self.defaultCalendar = self.eventStore.defaultCalendarForNewEvents
         // Enable the Add button
-        self.addButton.enabled = true
+        self.addButton.isEnabled = true
         // Fetch all events happening in the next 24 hours and put them into eventsList
         self.eventsList = self.fetchEvents()
         // Update the UI with the above events
@@ -147,25 +140,24 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     
     // Fetch all events happening in the next 24 hours
     private func fetchEvents() -> [EKEvent] {
-        let startDate = NSDate()
+        let startDate = Date()
         
         //Create the end date components
-        let tomorrowDateComponents = NSDateComponents()
+        var tomorrowDateComponents = DateComponents()
         tomorrowDateComponents.day = 1
         
-        let endDate = NSCalendar.currentCalendar().dateByAddingComponents(tomorrowDateComponents,
-            toDate: startDate,
-            options: [])!
+        let endDate = Calendar.current.date(byAdding: tomorrowDateComponents,
+            to: startDate)!
         // We will only search the default calendar for our events
         let calendarArray: [EKCalendar] = [self.defaultCalendar]
         
         // Create the predicate
-        let predicate = self.eventStore.predicateForEventsWithStartDate(startDate,
-            endDate: endDate,
+        let predicate = self.eventStore.predicateForEvents(withStart: startDate,
+            end: endDate,
             calendars: calendarArray)
         
         // Fetch all events that match the predicate
-        let events = self.eventStore.eventsMatchingPredicate(predicate)
+        let events = self.eventStore.events(matching: predicate)
         
         return events
     }
@@ -183,7 +175,7 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
         // Set addController's event store to the current event store
         addController.eventStore = self.eventStore!
         addController.editViewDelegate = self
-        self.presentViewController(addController, animated: true, completion: nil)
+        self.present(addController, animated: true, completion: nil)
     }
     
     
@@ -191,11 +183,11 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     //MARK: EKEventEditViewDelegate
     
     // Overriding EKEventEditViewDelegate method to update event store according to user actions.
-    func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction) {
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
         // Dismiss the modal view controller
-        self.dismissViewControllerAnimated(true) {[weak self] in
-            if action != .Canceled {
-                dispatch_async(dispatch_get_main_queue()) {
+        self.dismiss(animated: true) {[weak self] in
+            if action != .canceled {
+                DispatchQueue.main.async {
                     // Re-fetch all events happening in the next 24 hours
                     self?.eventsList = self!.fetchEvents()
                     // Update the UI with the above events
@@ -207,7 +199,7 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
     
     
     // Set the calendar edited by EKEventEditViewController to our chosen calendar - the default calendar.
-    func eventEditViewControllerDefaultCalendarForNewEvents(controller: EKEventEditViewController) -> EKCalendar {
+    func eventEditViewControllerDefaultCalendar(forNewEvents controller: EKEventEditViewController) -> EKCalendar {
         return self.defaultCalendar
     }
     
