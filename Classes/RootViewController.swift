@@ -104,6 +104,8 @@ class RootViewController: UITableViewController, EKEventEditViewDelegate {
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: {action in})
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
+        @unknown default:
+            fatalError("Unknown status: \(status)")
         }
     }
     
